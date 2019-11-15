@@ -1,7 +1,7 @@
 module.exports = {
-  title: `Bee starter`,
-  description: `Blog posted about ...`,
-  author: `[Your Name]`,
+  title: `devAdvice blog`,
+  description: ``,
+  author: `Domagoj Kriskovic`,
   introduction: `I explain with words and code. I explain with words and code. I explain with words and code.`,
   siteUrl: `https://blog.devAdvice.io`, // Your blog site url
   social: {

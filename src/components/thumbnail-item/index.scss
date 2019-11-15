@@ -1,5 +1,9 @@
 @import '../../styles/variables.scss';
 
+a.thumbnail p {
+  color: $dark-gray;
+}
+
 .thumbnail {
   display: block;
   margin-bottom: 12px;
@@ -11,7 +15,7 @@
 
   p {
     font-size: 90%;
-    line-height: 1.4;
+    line-height: 2;
   }
 }
 

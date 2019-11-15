@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react'
 import { graphql } from 'gatsby'
-
-import * as Elements from '../components/elements'
 import { Layout } from '../layout'
 import { Head } from '../components/head'
 import { PostTitle } from '../components/post-title'
 import { PostContainer } from '../components/post-container'
-import { SocialShare } from '../components/social-share'
 import { SponsorButton } from '../components/sponsor-button'
-import { Bio } from '../components/bio'
-import { PostNavigator } from '../components/post-navigator'
 import { Disqus } from '../components/disqus'
 import { Utterences } from '../components/utterances'
 import * as ScrollManager from '../utils/scroll'
@@ -27,18 +22,29 @@ export default ({ data, pageContext, location }) => {
   const { title, comment, siteUrl, author, sponsor } = metaData
   const { disqusShortName, utterances } = comment
 
+  const fImg = post.frontmatter.featuredImage
+  const fStartIndex = post.html.search(
+    new RegExp('src="(.*?)' + fImg + '.[a-zA-Z]{2,3}', 'g')
+  )
+  const fEndIndex = post.html.search(new RegExp(fImg + '.[a-zA-Z]{2,3}', 'g'))
+
+  const featuredImage =
+    fStartIndex !== -1 && fEndIndex !== -1
+      ? post.html.substring(fStartIndex + 5, fEndIndex + fImg.length + 4)
+      : null
+
   return (
     <Layout location={location} title={title}>
-      <Head title={post.frontmatter.title} description={post.excerpt} />
+      <Head
+        title={post.frontmatter.title}
+        description={post.excerpt}
+        featuredImage={featuredImage}
+      />
       <PostTitle title={post.frontmatter.title} />
       <PostContainer html={post.html} />
-      <SocialShare title={post.frontmatter.title} author={author} />
       {!!sponsor.buyMeACoffeeId && (
         <SponsorButton sponsorId={sponsor.buyMeACoffeeId} />
       )}
-      <Elements.Hr />
-      <Bio />
-      <PostNavigator pageContext={pageContext} />
       {!!disqusShortName && (
         <Disqus
           post={post}
@@ -73,6 +79,7 @@ export const pageQuery = graphql`
       excerpt(pruneLength: 280)
       html
       frontmatter {
+        featuredImage
         title
         date(formatString: "MMMM DD, YYYY")
       }
