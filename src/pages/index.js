@@ -30,7 +30,9 @@ export default ({ data, location }) => {
 
   const { siteMetadata } = data.site
   const { countOfInitialPost } = siteMetadata.configs
-  const posts = data.allMarkdownRemark.edges
+  const posts = data.allMarkdownRemark.edges.filter(
+    post => post.node.frontmatter.category !== 'page'
+  )
   const categories = _.uniq(posts.map(({ node }) => node.frontmatter.category))
 
   useEffect(() => {

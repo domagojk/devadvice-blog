@@ -1,6 +1,7 @@
 ---
 title: 'Serverless Event Sourcing in AWS (Lambda, DynamoDB, SQS)'
 description: 'In this post, I have presented the architecture behind a project called “Beenion”.'
+author: Domagoj Kriskovic
 date: '2019-02-06T14:50:10.267Z'
 category: 'blog'
 published: true
@@ -76,7 +77,7 @@ For this project, events are categorized in the following manner:
 
 But, before saving event(s) in a database, usually, some kind of validations must be made, and in most cases that can only be done by making conditions against previously stored data.
 
-For example, in order to save “USER_FOLLOWED” event, there is a condition that the same user cannot be followed twice. To uphold this, I’m checking if user’s id is listed in an array of currently followed users:
+For example, in order to save `USER_FOLLOWED` event, there is a condition that the same user cannot be followed twice. To uphold this, I’m checking if user’s id is listed in an array of currently followed users:
 
 ```typescript
 if (userFollowers.includes(followUserId)) {
@@ -86,7 +87,7 @@ if (userFollowers.includes(followUserId)) {
 
 However, since this kind of array is not stored anywhere, it must first be created.
 
-This is done by retrieving all events for a certain user _(A5 in Fig. 3)_ and then passing them into a “reducer” where in case of “USER_FOLLOWED” event, a `userId` is added in an array, and in the case of “USER_UNFOLLOWED”, it is removed:
+This is done by retrieving all events for a certain user _(A5 in Fig. 3)_ and then passing them into a “reducer” where in case of `USER_FOLLOWED` event, a `userId` is added in an array, and in the case of `USER_UNFOLLOWED`, it is removed:
 
 ```typescript
 const currentUserEvents = await eventStore.getById(userId)
@@ -227,9 +228,9 @@ Since the “eventstore“ table is created with a `streamId` as a partition key
 
 But due to its “NoSQL nature”, retrieving ordered events across all aggregates in DynamoDB is not as easy as in relational databases.
 
-My first approach to solving this was using a global secondary index ([GSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)) and choosing a fixed property (like `active:1`) as a partition key and `timestamp` as the sort key. But, that is an [anti-pattern](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html)!Even though I’m projecting only index keys, it will always use a single partition and therefore require a large throughput (high cost). Also, I’m depending on accurately storing `timestamp` values which have its own problems (like sync issues between different services).
+My first approach to solving this was using a global secondary index ([GSI](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)) and choosing a fixed property (like `active:1`) as a partition key and `timestamp` as the sort key. But, that is an [anti-pattern](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html)! Even though I’m projecting only index keys, it will always use a single partition and therefore require a large throughput (high cost). Also, I’m depending on accurately storing `timestamp` values which have its own problems (like sync issues between different services).
 
-A second option is to manually store `streamId` and `version` in a separate item, table or even different type of database every time a new event is added. This is possible with DynamoDB Streams since it \_“\_captures a **time-ordered** sequence of item-level modifications in a DynamoDB table and durably stores the information for up to 24 hours” ([source](https://aws.amazon.com/blogs/database/how-to-perform-ordered-data-replication-between-applications-by-using-amazon-dynamodb-streams/)).
+A second option is to manually store `streamId` and `version` in a separate item, table or even different type of database every time a new event is added. This is possible with DynamoDB Streams since it "captures a **time-ordered** sequence of item-level modifications in a DynamoDB table and durably stores the information for up to 24 hours" ([source](https://aws.amazon.com/blogs/database/how-to-perform-ordered-data-replication-between-applications-by-using-amazon-dynamodb-streams/)).
 
 Overall, even though it’s solvable, I think this is the biggest issue of using DynamoDB for an event store.
 
@@ -251,7 +252,7 @@ Storing data like this ensures “all or none” events are saved for every comm
 
 After an event is stored in a database, that information must be propagated to event handlers, which are used in two ways:
 
-- as **projections — **for updating additional databases or services like “getStream”
+- as **projections** - for updating additional databases or services like “getStream”
 - as **process managers** (or “sagas”) — for side effects like sending emails or completing payments via 3rd party services
 
 In both cases, it’s preferable to send events in a fault tolerable and reliable way in the same order in which they are stored.
@@ -262,7 +263,9 @@ For those reasons, every projection or process manager consumes events by using 
 
 A message queue provides a buffer which temporarily stores messages sent by a “producer” and keeps them stored on the queue until a “consumer” retrieves it and, in the end, deletes it. In a FIFO queue, only after a message is deleted, the next one can be processed.
 
-![](./asset-7.png 'Fig. 6— _message queue (_[_source_](https://aws.amazon.com/message-queue/)_)_')
+![](./asset-7.png 'Fig. 6 — message queue')
+
+<span style="font-size:0.5em; text-align: center; margin-top: -35px; display:block">[_source_](https://aws.amazon.com/message-queue/)</span>
 
 ### DynamoDB Streams to SQS
 
@@ -288,7 +291,9 @@ The code base of this project is organized using a simple rule: **outer layers c
 
 This rule is at the heart of a “[clean architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)”, “[hexagonal architecture](http://alistair.cockburn.us/Hexagonal+architecture)” (ports and adapters), and “[onion architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/)”. Some argue it’s [all the same](http://blog.ploeh.dk/2013/12/03/layers-onions-ports-adapters-its-all-the-same/).
 
-![](./asset-8.png 'Fig. 7— The image is taken from [this](https://github.com/jkphl/clear-architecture) repository which presents a “Clear Architecture” concept')
+![](./asset-8.png 'Fig. 7 — a “Clear Architecture” concept')
+
+<span style="font-size:0.5em; text-align: center; margin-top: -35px; display:block">[_source_](https://github.com/jkphl/clear-architecture)</span>
 
 ### Domain Layer
 
@@ -350,8 +355,8 @@ export const linkCommandHandlers = (
 
 The outermost, client layer is separated into three sectors: infrastructure, ports, and tests.
 
-**Infrastructure  
-**The infrastructure consist of:
+**Infrastructure** <br>
+The infrastructure consist of:
 
 - Implementation of repository interfaces (DynamoDB or in-memory `eventStore` adapters).
 - [AWS Cognito](https://aws.amazon.com/cognito/) authorizer and lambda triggers for authentication.
@@ -360,13 +365,13 @@ The outermost, client layer is separated into three sectors: infrastructure, por
 
 ![](./asset-11.png)
 
-**Ports  
-**Ports act as an “entry point” to the application. They accept requests from external agencies (e.g. REST or CLI) or event handlers and communicate with the infrastructure and application layer.
+**Ports** <br>
+Ports act as an “entry point” to the application. They accept requests from external agencies (e.g. REST or CLI) or event handlers and communicate with the infrastructure and application layer.
 
 ![](./asset-12.png)
 
-**Tests  
-**Because of their “special nature” tests have their own sector in the client layer. But, you can think of them as another port.
+**Tests** <br>
+Because of their “special nature” tests have their own sector in the client layer. But, you can think of them as another port.
 
 However, I use a separated “tests” directory only when there are a lot of use-cases defined in numerous files. In simpler applications like this one, I usually define tests next to the file being tested (no matter in which layer).
 

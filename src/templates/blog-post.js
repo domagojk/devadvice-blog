@@ -19,7 +19,7 @@ export default ({ data, pageContext, location }) => {
 
   const post = data.markdownRemark
   const metaData = data.site.siteMetadata
-  const { title, comment, siteUrl, author, sponsor } = metaData
+  const { title, comment, siteUrl, sponsor } = metaData
   const { disqusShortName, utterances } = comment
 
   const fImg = post.frontmatter.featuredImage
@@ -40,12 +40,18 @@ export default ({ data, pageContext, location }) => {
         description={post.excerpt}
         featuredImage={featuredImage}
       />
-      <PostTitle title={post.frontmatter.title} />
-      <PostContainer html={post.html} />
-      {!!sponsor.buyMeACoffeeId && (
-        <SponsorButton sponsorId={sponsor.buyMeACoffeeId} />
+      {post.frontmatter.category !== 'page' && (
+        <div>
+          <PostTitle title={post.frontmatter.title} />
+          <div className="post-date">
+            By {post.frontmatter.author}, on {post.frontmatter.date}
+          </div>
+        </div>
       )}
-      {!!disqusShortName && (
+
+      <PostContainer html={post.html} />
+
+      {post.frontmatter.category !== 'page' && !!disqusShortName && (
         <Disqus
           post={post}
           shortName={disqusShortName}
@@ -53,7 +59,9 @@ export default ({ data, pageContext, location }) => {
           slug={pageContext.slug}
         />
       )}
-      {!!utterances && <Utterences repo={utterances} />}
+      {post.frontmatter.category !== 'page' && !!utterances && (
+        <Utterences repo={utterances} />
+      )}
     </Layout>
   )
 }
@@ -80,7 +88,9 @@ export const pageQuery = graphql`
       html
       frontmatter {
         featuredImage
+        author
         title
+        category
         date(formatString: "MMMM DD, YYYY")
       }
     }

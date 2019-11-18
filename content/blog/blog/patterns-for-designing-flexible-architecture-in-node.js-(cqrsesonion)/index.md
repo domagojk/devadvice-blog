@@ -1,6 +1,7 @@
 ---
 title: 'Patterns for designing flexible architecture in node.js (CQRS/ES/Onion)'
 description: 'In this post, I’ve presented a project that is using CQRS and Event Sourcing patterns. It’s organized using onion architecture and written with Typescript'
+author: Domagoj Kriskovic
 date: '2017-12-05T17:03:47.705Z'
 category: 'blog'
 published: true
@@ -37,7 +38,7 @@ However, I’m combining all of it together primarily to test and learn about th
 The project I’m building can be described as a platform which helps authors (developers, artists, writers etc.) receive feedback early on and reach the audience for their work regardless of their popularity.   
 It’s an online adaptation of a scientific journal publishing and peer reviewing.
 
-For more details, you can look at the [project readme](https://github.com/domagojk/beenion). But, for this post, it’s sufficient to understand that there are three main entities which are shaping a domain model of the application:
+For this post, it’s sufficient to understand that there are three main entities which are shaping a domain model of the application:
 
 - **article** — a submission (like a blog post or a youtube video) an author is promoting
 - **journal** — collection of articles which are accepted only if a set of rules defined by the journal is satisfied
