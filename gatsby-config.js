@@ -95,5 +95,11 @@ module.exports = {
     `gatsby-plugin-sass`,
     `gatsby-plugin-lodash`,
     `gatsby-plugin-sitemap`,
+    {
+      resolve: `gatsby-plugin-s3`,
+      options: {
+        bucketName: 'devadvice-blog',
+      },
+    },
   ],
 }

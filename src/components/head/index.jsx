@@ -11,7 +11,6 @@ export function Head({
   title,
   featuredImage,
 }) {
-  console.log(keywords)
   return (
     <StaticQuery
       query={detailsQuery}
@@ -60,7 +59,7 @@ export function Head({
               },
             ]
               .concat(
-                keywords.length > 0
+                keywords && keywords.length > 0
                   ? {
                       name: `keywords`,
                       content: keywords.join(`, `),

@@ -10,6 +10,7 @@ module.exports = {
     medium: ``, // Your Medium account
     facebook: ``, // Your Facebook account
   },
+  icon: `content/assets/favicon-32x32.png`, // Add your favicon
   keywords: [`blog`, 'serverless', 'aws', 'typescript', 'node.js', 'cqrs'],
   comment: {
     disqusShortName: '', // Your disqus-short-name. check disqus.com.
