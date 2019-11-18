@@ -1,0 +1,17 @@
+name: devadvice-blog
+service: devadvice-blog
+stage: dev
+
+myWebsite:
+  component: '@serverless/website'
+  inputs:
+    code:
+      root: ./ # The root folder of your website project.  Defaults to current working directory
+      src: ./public # The folder to be uploaded containing your built artifact
+    region: us-east-1 # The AWS region to deploy your website into
+    bucketName: 'devadvice-blog'
+
+    # You can specify a custom domain name for your website.
+    # You must have a public hosted zone available for this domain in AWS Route53.
+    # This is done automatically for you if you've purchased the domain via AWS Route53.
+    domain: blog.devadvice.io

@@ -3,7 +3,6 @@ import { Link } from 'gatsby'
 import './index.scss'
 
 export const Top = ({ title, location, rootPath }) => {
-  console.log(rootPath)
   return (
     <div className="top">
       <div className="link-wrapper">

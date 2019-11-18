@@ -39,6 +39,7 @@ export default ({ data, pageContext, location }) => {
         title={post.frontmatter.title}
         description={post.excerpt}
         featuredImage={featuredImage}
+        keywords={post.frontmatter.keywords}
       />
       {post.frontmatter.category !== 'page' && (
         <div>
@@ -91,6 +92,7 @@ export const pageQuery = graphql`
         author
         title
         category
+        keywords
         date(formatString: "MMMM DD, YYYY")
       }
     }

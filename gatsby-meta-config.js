@@ -1,8 +1,8 @@
 module.exports = {
   title: `devAdvice blog`,
-  description: ``,
+  description: `A blog about software development, mainly focused on serverless using AWS.`,
   author: `Domagoj Kriskovic`,
-  introduction: `I explain with words and code. I explain with words and code. I explain with words and code.`,
+  introduction: `I explain with words and code.`,
   siteUrl: `https://blog.devAdvice.io`, // Your blog site url
   social: {
     twitter: ``, // Your Twitter account
@@ -10,8 +10,7 @@ module.exports = {
     medium: ``, // Your Medium account
     facebook: ``, // Your Facebook account
   },
-  icon: `content/assets/felog.png`, // Add your favicon
-  keywords: [`blog`],
+  keywords: [`blog`, 'serverless', 'aws', 'typescript', 'node.js', 'cqrs'],
   comment: {
     disqusShortName: '', // Your disqus-short-name. check disqus.com.
     utterances: 'domagojk/devadvice-blog', // Your repository for archive comment
@@ -25,5 +24,5 @@ module.exports = {
   share: {
     facebookAppId: '', // Add facebookAppId for using facebook share feature v3.2
   },
-  ga: '', // Add your google analytics tranking ID
+  ga: 'UA-41181153-3', // Add your google analytics tranking ID
 }

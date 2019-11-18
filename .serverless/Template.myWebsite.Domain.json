@@ -1,0 +1,12 @@
+{
+  "region": "us-east-1",
+  "privateZone": false,
+  "domain": "devadvice.io",
+  "subdomains": [
+    {
+      "domain": "blog.devadvice.io",
+      "type": "awsS3Website",
+      "s3BucketName": "devadvice-blog"
+    }
+  ]
+}

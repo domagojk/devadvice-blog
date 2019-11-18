@@ -1,0 +1,6 @@
+{
+  "bucketName": "devadvice-blog",
+  "region": "us-east-1",
+  "url": "http://devadvice-blog.s3-website-us-east-1.amazonaws.com",
+  "domain": "https://blog.devadvice.io"
+}

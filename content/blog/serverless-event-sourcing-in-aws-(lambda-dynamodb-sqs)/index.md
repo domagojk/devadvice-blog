@@ -3,12 +3,20 @@ title: 'Serverless Event Sourcing in AWS (Lambda, DynamoDB, SQS)'
 description: 'In this post, I have presented the architecture behind a project called “Beenion”.'
 author: Domagoj Kriskovic
 date: '2019-02-06T14:50:10.267Z'
-category: 'blog'
+category: 'post'
 published: true
 canonical_link: https://medium.com/@domagojk/serverless-event-sourcing-in-aws-lambda-dynamodb-sqs-7237d79aed27
 featuredImage: /asset-2
 redirect_from:
   - /serverless-event-sourcing-in-aws-lambda-dynamodb-sqs-7237d79aed27
+keywords:
+  - cqrs
+  - aws
+  - Typescript
+  - node.js
+  - Software Architecture
+  - Microservices
+  - Javascript
 ---
 
 In this post, I have presented the project structured using **Event Sourcing** and **CQRS** patterns, written in **TypeScript**.

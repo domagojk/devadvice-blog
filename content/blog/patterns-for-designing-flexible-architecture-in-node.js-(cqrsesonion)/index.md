@@ -3,7 +3,7 @@ title: 'Patterns for designing flexible architecture in node.js (CQRS/ES/Onion)'
 description: 'In this post, I’ve presented a project that is using CQRS and Event Sourcing patterns. It’s organized using onion architecture and written with Typescript'
 author: Domagoj Kriskovic
 date: '2017-12-05T17:03:47.705Z'
-category: 'blog'
+category: 'post'
 published: true
 canonical_link: https://medium.com/@domagojk/patterns-for-designing-flexible-architecture-in-node-js-cqrs-es-onion-7eb10bbefe17
 featuredImage: /asset-1
@@ -11,6 +11,11 @@ redirect_from:
   - /patterns-for-designing-flexible-architecture-in-node-js-cqrs-es-onion-7eb10bbefe17
 keywords:
   - cqrs
+  - Typescript
+  - node.js
+  - Software Architecture
+  - Microservices
+  - Javascript
 ---
 
 In this post, I’ve presented a project that is using **CQRS** and **Event Sourcing** patterns. It’s organized using **onion architecture** and written with **TypeScript**.

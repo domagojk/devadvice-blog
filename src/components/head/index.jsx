@@ -11,6 +11,7 @@ export function Head({
   title,
   featuredImage,
 }) {
+  console.log(keywords)
   return (
     <StaticQuery
       query={detailsQuery}

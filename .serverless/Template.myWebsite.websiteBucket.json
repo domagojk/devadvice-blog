@@ -1,0 +1,6 @@
+{
+  "name": "devadvice-blog",
+  "region": "us-east-1",
+  "accelerated": false,
+  "url": "https://devadvice-blog.s3.amazonaws.com"
+}
