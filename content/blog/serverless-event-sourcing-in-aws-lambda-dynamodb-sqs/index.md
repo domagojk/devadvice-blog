@@ -242,6 +242,8 @@ A second option is to manually store `streamId` and `version` in a separate item
 
 Overall, even though it’s solvable, I think this is the biggest issue of using DynamoDB for an event store.
 
+**Update May 28, 2019** with the upgrades like [this one](https://aws.amazon.com/blogs/database/how-amazon-dynamodb-adaptive-capacity-accommodates-uneven-data-access-patterns-or-why-what-you-know-about-dynamodb-might-be-outdated/) using a single partition may be not such a bad thing. But I still recomend not to use it if you can avoid it or as in this case, store only index keys to keep it as small as possible.
+
 ### Transactions
 
 When I’ve started this project, [DynamoDB transactions](https://aws.amazon.com/blogs/aws/new-amazon-dynamodb-transactions/) were not available, so in order to make [ACID](https://en.wikipedia.org/wiki/ACID_%28computer_science%29) possible, on each transaction, I’m storing an array of events.
@@ -287,11 +289,13 @@ If an error occurs in any step of that process, DynamoDB stream will retry sendi
 
 ### SQS to Event handlers
 
-To get a message from an SQS queue, there must be an external service which polls it. But because Lambda functions don’t support FIFO queues as event sources (at the moment), I’m using an EC2 instance.
+To get a message from an SQS queue, there must be an external service which polls it. ~~But because Lambda functions don’t support FIFO queues as event sources (at the moment), I’m using an EC2 instance.~~
 
-That is the only “non-serverless” part of this architecture, but fortunately, it’s a “cheap” one. A single micro (or even nano) instance is sufficient for a task which consists of getting a message from SQS containing event id (_B2 in fig. 3_), retrieving an event data from DynamoDB using that id and invoking a Lambda function (_B3 in fig. 3_).
+~~That is the only “non-serverless” part of this architecture, but fortunately, it’s a “cheap” one. A single micro (or even nano) instance is sufficient for a task which consists of getting a message from SQS containing event id (_B2 in fig. 3_), retrieving an event data from DynamoDB using that id and invoking a Lambda function (_B3 in fig. 3_).~~
 
-However, in the case of a very large number of events or event handlers, due to the nature of message queues, a service like this can easily be scaled horizontally by adding new instances.
+~~However, in the case of a very large number of events or event handlers, due to the nature of message queues, a service like this can easily be scaled horizontally by adding new instances.~~
+
+**Update Nov 19, 2019** [AWS Lambda now supports FIFO queues as an event source.](https://aws.amazon.com/about-aws/whats-new/2019/11/aws-lambda-supports-amazon-sqs-fifo-event-source/)
 
 ## Code Structure
 
@@ -393,3 +397,7 @@ UI for this project is composed of two [React](https://reactjs.org/) apps:
 ### Source Code
 
 You can check the entire source code of the project [here](https://github.com/domagojk/beenion).
+
+# Join the Newsletter
+
+You can subscribe to get my latest content by email [here](https://mailchi.mp/8df8f0796b1f/devadvice)
