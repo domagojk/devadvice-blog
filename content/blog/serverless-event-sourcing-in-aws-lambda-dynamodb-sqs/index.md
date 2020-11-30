@@ -397,7 +397,3 @@ UI for this project is composed of two [React](https://reactjs.org/) apps:
 ### Source Code
 
 You can check the entire source code of the project [here](https://github.com/domagojk/beenion).
-
-# Join the Newsletter
-
-You can subscribe to get my latest content by email [here](https://mailchi.mp/8df8f0796b1f/devadvice)
