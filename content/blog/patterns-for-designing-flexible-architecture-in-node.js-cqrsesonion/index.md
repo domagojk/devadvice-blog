@@ -356,7 +356,3 @@ As I’ve already mentioned; the CQRS pattern can be used without the Event sour
 - MSDN — Introducing Event Sourcing ([article](https://msdn.microsoft.com/en-us/library/jj591559.aspx))
 - Scott Wlaschin — Domain Driven Design ([video](https://goo.gl/kxVAWt), [article](http://fsharpforfunandprofit.com/ddd/))
 - Mark Seemann — Functional architecture is Ports and Adapters ([article](http://blog.ploeh.dk/2016/03/18/functional-architecture-is-ports-and-adapters/), [video](https://www.youtube.com/watch?v=US8QG9I1XW0))
-
-# Join the Newsletter
-
-You can subscribe to get my latest content by email [here](https://mailchi.mp/8df8f0796b1f/devadvice)
